@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paid Squad Diagnostic</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a0a0a;
+      color: #f5f5f5;
+      line-height: 1.6;
+      padding: 2rem 1rem;
+    }
+    .container { max-width: 640px; margin: 0 auto; }
+    h1 { font-size: 1.75rem; margin-bottom: 0.5rem; }
+    .subtitle { color: #888; margin-bottom: 2rem; }
+    .question { margin-bottom: 2rem; }
+    label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+    }
+    .hint { color: #666; font-size: 0.875rem; margin-bottom: 0.75rem; }
+    input[type="email"] {
+      width: 100%;
+      padding: 0.875rem;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 1rem;
+    }
+    input[type="email"]:focus { outline: none; border-color: #666; }
+    .option {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 1rem;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .option:hover { border-color: #555; }
+    .option input { margin-top: 0.25rem; }
+    .option.selected { border-color: #fff; }
+    button {
+      width: 100%;
+      padding: 1rem;
+      background: #fff;
+      color: #0a0a0a;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    .success { text-align: center; padding: 4rem 0; }
+    .success h2 { margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <form id="diagnostic">
+      <h1>Where are you actually starting from?</h1>
+      <p class="subtitle">This takes about 3 minutes. Be honest. Don't answer the way you think you're supposed to.</p>
+
+      <div class="question">
+        <label>What's your email?</label>
+        <input type="email" name="email" required placeholder="you@example.com">
+      </div>
+
+      <div class="question">
+        <label>Which of these is closest to your current situation?</label>
+        <label class="option">
+          <input type="radio" name="current_situation" value="employed" required>
+          <span>I have a job. One salary. And I'm aware it's the only thing standing between me and trouble.</span>
+        </label>
+        <label class="option">
+          <input type="radio" name="current_situation" value="unemployed">
+          <span>I'm unemployed or underemployed. I need money, not a course on personal branding.</span>
+        </label>
+        <label class="option">
+          <input type="radio" name="current_situation" value="freelancing">
+          <span>I'm already doing client work. But every new dollar requires one more hour of my time.</span>
+        </label>
+      </div>
+
+      <div class="question">
+        <label>How many hours a week can you realistically commit?</label>
+        <div class="hint">Not the number you wish you had. The number that's actually available.</div>
+        <label class="option">
+          <input type="radio" name="weekly_hours" value="5-10" required>
+          <span>5–10 hours. I have very little breathing room.</span>
+        </label>
+        <label class="option">
+          <input type="radio" name="weekly_hours" value="10-20">
+          <span>10–20 hours. Tight, but there's something there.</span>
+        </label>
+        <label class="option">
+          <input type="radio" name="weekly_hours" value="20+">
+          <span>20+ hours. I can actually treat this like something serious.</span>
+        </label>
+      </div>
+
+      <div class="question">
+        <label>What can you put toward tools right now?</label>
+        <div class="hint">Be honest. There's no wrong answer here.</div>
+        <label class="option">
+          <input type="radio" name="monthly_budget" value="under_40" required>
+          <span>Under $40/month. I need to work with free tools.</span>
+        </label>
+        <label class="option">
+          <input type="radio" name="monthly_budget" value="40_100">
+          <span>$40–100/month. I can cover the basics.</span>
+        </label>
+        <label class="option">
+          <input type="radio" name="monthly_budget" value="100_plus">
+          <span>$100+/month. I'm ready to invest if it makes sense.</span>
+        </label>
+      </div>
+
+      <div class="question">
+        <label>Do you have anything a buyer can see as proof?</label>
+        <label class="option">
+          <input type="radio" name="has_proof" value="yes_portfolio" required>
+          <span>Yes. I have a portfolio, samples, or past work I can show.</span>
+        </label>
+        <label class="option">
+          <input type="radio" name="has_proof" value="yes_reviews">
+          <span>Yes. I have reviews, testimonials, or client results.</span>
+        </label>
+        <label class="option">
+          <input type="radio" name="has_proof" value="no_not_yet">
+          <span>No. Not yet. That's part of what I need to build.</span>
+        </label>
+      </div>
+
+      <div class="question">
+        <label>How comfortable are you with AI tools?</label>
+        <label class="option">
+          <input type="radio" name="ai_comfort" value="never_used" required>
+          <span>Never used them. I need the simplest possible starting point.</span>
+        </label>
+        <label class="option">
+          <input type="radio" name="ai_comfort" value="basic">
+          <span>I've used ChatGPT a few times. I can follow instructions.</span>
+        </label>
+        <label class="option">
+          <input type="radio" name="ai_comfort" value="intermediate">
+          <span>I use AI regularly. I'm comfortable figuring things out.</span>
+        </label>
+      </div>
+
+      <button type="submit" id="submit-btn">Get my starting point</button>
+    </form>
+
+    <div id="success" class="success" style="display: none;">
+      <h2>You're in.</h2>
+      <p>We've got your responses. Check your inbox for what happens next.</p>
+    </div>
+  </div>
+
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+    const SUPABASE_URL = 'https://akewzvkddnkrlznopfgo.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFrZXd6dmtkZG5rcmx6bm9wZmdvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxNzM3NTcsImV4cCI6MjA5MTc0OTc1N30.tZgbRj6u2XRR4VA5idWd5zpnzOTbX_ADjXNuYp7fmG4';
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // Visual selection state
+    document.querySelectorAll('.option').forEach(label => {
+      label.addEventListener('click', () => {
+        const name = label.querySelector('input').name;
+        document.querySelectorAll(`input[name="${name}"]`).forEach(i => {
+          i.closest('.option').classList.remove('selected');
+        });
+        label.classList.add('selected');
+      });
+    });
+
+    document.getElementById('diagnostic').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('submit-btn');
+      btn.disabled = true;
+      btn.textContent = 'Submitting...';
+
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData);
+
+      // Determine track based on answers
+      let recommended_track = 'GET_VIEWED';
+      if (data.current_situation === 'unemployed' || data.current_situation === 'underemployed') {
+        recommended_track = 'GET_CAPITAL';
+      } else if (data.monthly_budget === 'under_40' || data.has_proof === 'no_not_yet') {
+        recommended_track = 'GET_CAPITAL';
+      }
+
+      const { error } = await supabase
+        .from('diagnostic_responses')
+        .insert([{
+          email: data.email,
+          current_situation: data.current_situation,
+          weekly_hours: data.weekly_hours,
+          monthly_budget: data.monthly_budget,
+          has_proof: data.has_proof,
+          ai_comfort: data.ai_comfort,
+          recommended_track
+        }]);
+
+      if (error) {
+        alert('Something went wrong. Please try again.');
+        btn.disabled = false;
+        btn.textContent = 'Get my starting point';
+        console.error(error);
+        return;
+      }
+
+      e.target.style.display = 'none';
+      document.getElementById('success').style.display = 'block';
+    });
+  </script>
+</body>
+</html>
