@@ -278,10 +278,14 @@ const scheduleText = isCapital
 const schedule = document.createElement('p');
 schedule.textContent = scheduleText;
 nextBox.appendChild(schedule);
+const meetLink = isCapital
+  ? 'https://meet.google.com/oqt-frye-ryn'
+  : 'https://meet.google.com/qpj-xwem-uog';
 const calendarParams = new URLSearchParams({
   action: 'TEMPLATE',
   text: 'Paid Squad ' + trackName + ' Session',
-  details: 'Live implementation room. No recording. ' + scheduleText + ' Your Google Meet room link will be provided separately.',
+  details: 'Live implementation room. Sessions are not recorded. ' + scheduleText + '\nJoin Google Meet: ' + meetLink,
+  location: meetLink,
   dates: isCapital
     ? '20261014T230000Z/20261015T000000Z'
     : '20261014T100000Z/20261014T110000Z',
