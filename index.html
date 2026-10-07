@@ -269,13 +269,27 @@ nextBox.innerHTML = `
   </div>
 `;
 
-// Google Calendar link for the appropriate track
-const calendarBase = 'https://calendar.google.com/calendar/render?action=TEMPLATE';
-const calendarParams = track === 'GET_CAPITAL'
-  ? '&text=Paid+Squad+GET+CAPITAL+Session&details=Live+implementation+room.+No+recording.+Show+up+on+time.&dates=20251012T170000Z/20251012T180000Z'
-  : '&text=Paid+Squad+GET+VIEWED+Session&details=Live+implementation+room.+No+recording.+Show+up+on+time.&dates=20251012T190000Z/20251012T200000Z';
-
-document.getElementById('success-calendar').href = calendarBase + calendarParams;
+// Ten weekly sessions, 14 October through 16 December 2026.
+// GET CAPITAL uses fixed EST (UTC-5), as requested, not daylight-adjusted ET.
+const isCapital = track === 'GET_CAPITAL';
+const scheduleText = isCapital
+  ? 'Wednesdays, 6–7 PM EST (fixed UTC-5). In South Africa: Thursdays, 1–2 AM SAST, 15 October–17 December 2026.'
+  : 'Wednesdays, 12–1 PM SAST, 14 October–16 December 2026.';
+const schedule = document.createElement('p');
+schedule.textContent = scheduleText;
+nextBox.appendChild(schedule);
+const calendarParams = new URLSearchParams({
+  action: 'TEMPLATE',
+  text: 'Paid Squad ' + trackName + ' Session',
+  details: 'Live implementation room. No recording. ' + scheduleText + ' Your Google Meet room link will be provided separately.',
+  dates: isCapital
+    ? '20261014T230000Z/20261015T000000Z'
+    : '20261014T100000Z/20261014T110000Z',
+  ctz: 'Africa/Johannesburg',
+  recur: 'RRULE:FREQ=WEEKLY;COUNT=10'
+});
+document.getElementById('success-calendar').href =
+  'https://calendar.google.com/calendar/render?' + calendarParams.toString();
 
 document.getElementById('success').style.display = 'block';
     });
