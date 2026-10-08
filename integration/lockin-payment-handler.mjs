@@ -46,7 +46,7 @@ export function createHandler(env, fetcher = fetch) {
       if (claimed.state === 'sent') return Response.json({already_sent:true});
       if (claimed.state !== 'claimed') return new Response('Confirmation pending; retry or reconcile delivery', {status:503});
       // Payload is fixed for a session, including during retries.
-      const res = await fetcher('https://api.resend.com/emails', {method:'POST',headers:{Authorization:`Bearer ${env.RESEND_API_KEY}`,'Content-Type':'application/json','Idempotency-Key':`lockin-confirmation-${payment.session_id}`},body:JSON.stringify({from:'Bailey at The Paid Squad <lockin@paid-squad.com>',reply_to:'baleseng.ram@gmail.com',to:[payment.email],subject:'Your US$50 Lock-In place is confirmed',template:{id:'a7bde0fe-fc32-4897-8c1b-ab06b0679e8a'}}),signal:AbortSignal.timeout(20000)});
+      const res = await fetcher('https://api.resend.com/emails', {method:'POST',headers:{Authorization:`Bearer ${env.RESEND_API_KEY}`,'Content-Type':'application/json','Idempotency-Key':`lockin-confirmation-${payment.session_id}`},body:JSON.stringify({from:'Bailey at The Paid Squad <lock@paid-squad.com>',reply_to:'lock@paid-squad.com',to:[payment.email],subject:'Your US$50 Lock-In place is confirmed',template:{id:'a7bde0fe-fc32-4897-8c1b-ab06b0679e8a'}}),signal:AbortSignal.timeout(20000)});
       if (!res.ok) throw new Error(`Email provider failed: ${res.status}`);
       const data = await res.json();
       if (!data.id) throw new Error('Missing email message ID');
