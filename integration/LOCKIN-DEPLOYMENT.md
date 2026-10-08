@@ -23,5 +23,5 @@ The live Stripe account had zero webhook endpoints when checked on 8 October 202
 Beige background uses inline colours, HTML bgcolor, gradient backgrounds, light colour-scheme metadata and dark-mode CSS. Some clients force recolouring; beige cannot be guaranteed on every phone. Test Gmail iOS/Android, Apple Mail and Outlook before claiming coverage. Native Resend unsubscribe placeholders must resolve in actual Broadcast sends.
 
 Confirmation template published: `a7bde0fe-fc32-4897-8c1b-ab06b0679e8a`.
-Sender: `Bailey at The Paid Squad <lockin@paid-squad.com>`.
+Sender: `Bailey at The Paid Squad <lock@paid-squad.com>`.
 Reply-to: the existing connected Gmail mailbox until a domain inbox is verified.
